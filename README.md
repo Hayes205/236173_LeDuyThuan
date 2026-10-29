@@ -111,3 +111,72 @@ Không đưa tệp .env lên GitHub.
 Không công khai mật khẩu, access token hoặc thông tin kết nối bí mật.
 
 Sử dụng biến môi trường để cấu hình dịch vụ.
+
+
+## Chạy Backend bằng Docker
+
+### 1. Yêu cầu
+
+- Docker Desktop đã được cài đặt và Docker Engine đang chạy.
+- Có tài khoản MongoDB Atlas.
+- Đã cấu hình kết nối MongoDB Atlas cho backend.
+
+### 2. Docker Image
+
+Image backend: hayes123/food-backend:1.0`
+
+### 3. Cấu hình biến môi trường
+
+Tạo file `.env` tại thư mục gốc dự án với nội dung:
+
+```dotenv
+PORT=5000
+MONGODB_URI=mongodb+srv://236173_LeDuyThuan:thuan2012@cluster0.dkxnlmv.mongodb.net/236173_LeDuyThuan?retryWrites=true&w=majority
+CLIENT_URL=http://localhost:5173
+```
+
+Không đưa file `.env` chứa thông tin bí mật lên GitHub hoặc đóng gói vào Docker image.
+
+### 4. Tải Docker Image
+
+```bash
+docker pull hayes123/food-backend:1.0
+```
+
+### 5. Chạy Container
+
+Tại thư mục gốc dự án, chạy:
+
+```bash
+docker run -d --name food-backend -p 5000:5000 --env-file .env hayes123/food-backend:1.0
+```
+
+### 6. Kiểm tra hoạt động
+
+Kiểm tra container:
+
+```bash
+docker ps
+```
+
+Kiểm tra log:
+
+```bash
+docker logs food-backend
+```
+
+Kiểm tra health endpoint:
+
+`http://localhost:5000/health`
+
+Kiểm tra API danh sách món ăn:
+
+`http://localhost:5000/api/foods`
+
+### 7. Dừng và xóa Container
+
+
+docker stop food-backend
+docker rm food-backend
+
+

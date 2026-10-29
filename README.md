@@ -307,3 +307,6 @@ Lưu ý: Địa chỉ http://localhost:5000/api chỉ phù hợp khi trình duy�
 
 ## Triển khai frontend trên Render
 Frontend URL:https://web-236173-frwm.onrender.com
+
+## Triển khai backend trên Render
+Backend URL:https://api-236173.onrender.com

@@ -1,18 +1,18 @@
 const mongoose = require("mongoose");
 
 async function connectDB() {
-  try {
-    if (!process.env.MONGODB_URI) {
-      throw new Error("Chưa cấu hình biến MONGODB_URI");
-    }
+  const mongoURI = process.env.MONGODB_URI;
 
-    await mongoose.connect(process.env.MONGODB_URI);
-
-    console.log("Kết nối MongoDB Atlas thành công");
-  } catch (error) {
-    console.error("Lỗi kết nối MongoDB:", error.message);
-    throw error;
+  if (!mongoURI) {
+    throw new Error("Thiếu biến môi trường MONGODB_URI");
   }
+
+  await mongoose.connect(mongoURI, {
+    serverSelectionTimeoutMS: 10000,
+  });
+
+  console.log("MongoDB Atlas kết nối thành công");
+  console.log("Database đang sử dụng:", mongoose.connection.name);
 }
 
 module.exports = connectDB;

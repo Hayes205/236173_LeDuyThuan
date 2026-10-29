@@ -303,3 +303,7 @@ docker run -d \
 Mở trình duyệt tại http://localhost:8081 để truy cập ứng dụng.
 
 Lưu ý: Địa chỉ http://localhost:5000/api chỉ phù hợp khi trình duyệt đang chạy trên cùng máy tính với backend được ánh xạ cổng 5000. Nếu frontend và backend triển khai trên hai máy khác nhau, cần cấu hình địa chỉ API công khai phù hợp.
+
+
+## Triển khai frontend trên Render
+Frontend URL:https://web-236173-frwm.onrender.com

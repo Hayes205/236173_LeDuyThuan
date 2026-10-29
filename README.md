@@ -310,3 +310,10 @@ Frontend URL:https://web-236173-frwm.onrender.com
 
 ## Triển khai backend trên Render
 Backend URL:https://api-236173.onrender.com
+
+
+## Kiểm tra tổng thể hệ thống
+
+Frontend trên Render Kiểm tra giao diện, tìm kiếm, thêm, xem chi tiết, sửa và xóa món ăn. Mở website
+Backend API trên Render Kiểm tra trạng thái hoạt động và dữ liệu JSON trả về. Health check API danh sách món ăn
+MongoDB Atlas Xác nhận dữ liệu được lưu thật trong database 236028_TranTienThan, collection foods. Kiểm thử CRUD trên website Xem danh sách Danh sách món ăn được tải từ API. Thêm món ăn Thêm một món mới và kiểm tra món đó xuất hiện. Tìm theo tên món ăn hoặc từ khóa phù hợp. Cập nhật Sửa tên hoặc giá và xác nhận dữ liệu mới được hiển thị. Xóa Xóa món kiểm thử và xác nhận món không còn trong danh sách. Kiểm tra MongoDB Xác nhận thao tác thêm, sửa, xóa đã được lưu trong Atlas.

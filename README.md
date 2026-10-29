@@ -179,4 +179,127 @@ Kiểm tra API danh sách món ăn:
 docker stop food-backend
 docker rm food-backend
 
+## Chạy Frontend bằng Docker
 
+1. Yêu cầu
+
+Đã cài đặt Docker Desktop.
+
+Docker Engine đang chạy.
+
+Đã có mã nguồn frontend trong thư mục client/.
+
+Backend đang chạy tại http://localhost:5000.
+
+2. Cấu trúc các file Docker
+
+client/
+├── Dockerfile
+├── nginx.conf
+├── .dockerignore
+├── package.json
+├── index.html
+└── src/
+
+Dockerfile: Build ứng dụng React và tạo image frontend.
+
+nginx.conf: Cấu hình Nginx để phục vụ ứng dụng.
+
+.dockerignore: Loại trừ các file không cần thiết khỏi build context.
+
+3. Build Docker image
+
+Mở terminal tại thư mục gốc của dự án:
+
+docker build \
+  --build-arg VITE_API_URL=http://localhost:5000/api \
+  -t hayes123/food-frontend:1.0 \
+  -f client/Dockerfile client
+
+Trong đó:
+
+--build-arg VITE_API_URL=...: Cấu hình địa chỉ API cho frontend tại thời điểm build.
+
+-t hayes123/food-frontend:1.0: Đặt tên và tag cho Docker image.
+
+-f client/Dockerfile: Chỉ định Dockerfile dùng để build.
+
+client: Thư mục chứa mã nguồn frontend.
+
+4. Khởi chạy frontend container
+
+Chạy lệnh:
+
+docker run -d \
+  --name food-frontend \
+  -p 8081:80 \
+  hayes123/food-frontend:1.0
+
+Frontend sẽ được phục vụ trên cổng 8081 của máy tính.
+
+Truy cập:
+
+http://localhost:8081
+
+5. Kiểm tra container
+
+Kiểm tra trạng thái container:
+
+docker ps
+
+Xem log frontend:
+
+docker logs food-frontend
+
+Kiểm tra ánh xạ cổng:
+
+docker port food-frontend
+
+Nếu container cũ đã tồn tại, xóa container đó trước khi chạy lại:
+
+docker rm -f food-frontend
+
+Sau đó chạy lại lệnh docker run ở bước 4.
+
+6. Cấu hình kết nối Backend
+
+Frontend sử dụng API tại:
+
+http://localhost:5000/api
+
+Để frontend hoạt động chính xác:
+
+Backend phải đang chạy và ánh xạ cổng 5000:5000.
+
+Backend phải cho phép origin http://localhost:8081 trong cấu hình CORS.
+
+Nếu thay đổi VITE_API_URL, cần build lại frontend image.
+
+Nếu triển khai trên máy chủ khác, cần thay localhost bằng địa chỉ backend mà trình duyệt có thể truy cập.
+
+7. Đẩy image lên Docker Hub
+
+Đăng nhập Docker Hub:
+
+docker login
+
+Đẩy image frontend:
+
+docker push hayes123/food-frontend:1.0
+
+8. Tải và chạy image trên máy khác
+
+Tải image:
+
+docker pull hayes123/food-frontend:1.0
+
+Khởi chạy:
+
+docker run -d \
+  --name food-frontend \
+  -p 8081:80 \
+  hayes123/food-frontend:1.0
+
+Mở trình duyệt tại http://localhost:8081 để truy cập ứng dụng.
+
+Lưu ý: Địa chỉ http://localhost:5000/api chỉ phù hợp khi trình duyệt đang chạy trên cùng máy tính với backend được ánh xạ cổng 5000. Nếu frontend và backend triển khai trên hai máy khác nhau, cần cấu hình địa chỉ API công khai phù hợp.

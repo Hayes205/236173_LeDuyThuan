@@ -12,8 +12,20 @@ const foodRoutes = require("./routes/foodRoutes");
 
 const app = express();
 
+const allowedOrigins = [
+    "http://localhost:5173",
+    "http://localhost:8081",
+    "http://localhost:3000"
+];
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Origin không được phép bởi CORS: " + origin));
+        }
+    }
 }));
 
 app.use(express.json({ limit: "1mb" }));
